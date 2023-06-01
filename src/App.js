@@ -1,12 +1,30 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Body from './components/Body';
+import Footer from './components/Footer';
+import Header from './components/Header';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      <h1>Hi This is Afzal Khan</h1>
-      </header>
+    <div className="App m-1">
+        <Header/>
+        <Body/>
+        <Footer/>
+    {/* 
+    Head
+    Body
+      SiderBar
+          MenuItems
+      MainContainer
+        TagBtnList
+        VideoContainer
+          VideoCard
+    Footer
+      email
+      services
+      contact
+    
+    */}
     </div>
   );
 }
