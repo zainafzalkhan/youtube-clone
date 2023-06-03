@@ -94,3 +94,31 @@ in this file,we will tell our tailwind to what file needs to track in the conten
     @tailwind components;
     @tailwind utilities;
 
+
+
+# Handle state 
+    handleState using redux-toolkit
+    cmd: npm i @reduxjs/toolkit
+
+    install react-redux also
+    cmd: npm i react-redux
+
+# Steps for redux creation;
+    step-1: craete store
+    step-2: crate Slice
+    step-3  assign slice to store
+    step-4: provide store to app provider
+    step-5: disptach event to update option state
+    step-6: useSelector to get value
+
+
+# Setup Router
+
+    cmd: npm i react-router-dom
+
+    =>createBrowserRouter , its the array of path object 
+    =><RouterProvider router={appRouter} />
+    =>useSearchParams() to get urs search data
+
+    
+

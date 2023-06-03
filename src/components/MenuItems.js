@@ -1,11 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const MenuItems = () => {
   return (
     <div className='sidebar-menus p-3 flex flex-col gap-4'>
         <div className="home">
             <ul>
-                <li>Home</li>
+             <Link to='/'>
+             <li>Home</li>
+             </Link>   
                 <li>Shorts</li>
                 <li>Subscription</li>
             </ul>
