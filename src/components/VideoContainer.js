@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import VideoCard from './VideoCard'
+import VideoCard, { addVideo } from './VideoCard'
 import YOUTUBE_POPOLUER_VDO_API from '../utils/constant'
 import { Link } from 'react-router-dom'
 
@@ -16,6 +16,7 @@ const VideoContainer = () => {
   },[])
   return (
     <div className='video-container flex gap-4 flex-wrap my-4'>
+      {videos[0] && addVideo(videos[0])}
       {
         videos?.map(video=>(
         <Link key={video.id} to={`/watch?v=${video.id}`} > <VideoCard key={video.id} info={video}/> </Link>

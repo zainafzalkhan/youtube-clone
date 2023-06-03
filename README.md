@@ -120,5 +120,37 @@ in this file,we will tell our tailwind to what file needs to track in the conten
     =><RouterProvider router={appRouter} />
     =>useSearchParams() to get urs search data
 
+# Higher Order Function 
+    
+    take component as argument and return compo also
+    we use it modify it litte..
+    like yt vidoes shows add 
+
     
 
+# Search bar
+    search bar is basically use to make request 
+    for the data that is cx want, it may be exact 
+    data or it may be suggested data..
+    but this things happen in different manner
+    one may type the whole string once , or may 
+    write slowly,if we request on every stock key
+    and search string contains 5 letter, the requst 
+    would be 5 times , but the data come from last
+    request is desirable,it meanse all 4 starting
+    request is worthless.. to avoid this problem
+    we use Debouncing....
+
+        #Debouncing;
+
+            we will request data on key stroke, if the difference b/w two stroke key is 200ms
+
+    How i apply it in my project....
+    i call request in useEffect after 200ms 
+    useEffect depend on searchQ...
+    on update searchQ state component rerender.
+    and call return useeffect code.. where we clear 
+    timer... everty time when use effect call, it will be creating new timer and remover older one
+
+
+# Cache [to handle this we will use redux]

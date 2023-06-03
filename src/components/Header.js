@@ -1,11 +1,53 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import  { toggleMenu } from '../utils/appSlice';
+import { SEARCH_URL } from '../utils/constant';
+import { cacheResults } from '../utils/searchSlice';
+
 
 const Header = () => {
     const dispatch=useDispatch();
+    const [searchQ,setSearchQ]=useState("");
+    const [suggestData,setSuggestData]=useState([]);
+    const [showSuggestion,setShowSuggestion]=useState(false);
+    const searchCache=useSelector(store=>store.search)
+    /**
+     * searchCache={
+     *  'sh':[asdfasdf,asdfasdf,asdf]
+     * }
+     * 
+     */
     const handleSidebar=()=>{
         dispatch(toggleMenu())
+    }
+    useEffect(()=>{
+        // make an api call on every key press
+        // but if the difference is <200ms 
+        // reject the api call
+        
+       const timer=setTimeout(() => {
+        console.log('call'+searchQ)
+        
+        if(searchCache && searchCache[searchQ]){
+            console.log('from cache')
+            setSuggestData(searchCache[searchQ])
+        }else{
+            console.log('from api')
+            getSuggestions()
+        }
+         
+       }, 500); 
+       return ()=>{
+            clearTimeout(timer) 
+       }
+    },[searchQ]);
+    const getSuggestions=async()=>{
+       if(searchQ=='') return false
+        let jsonData=await fetch(SEARCH_URL+searchQ);
+        let data=await jsonData.json();  
+        setSuggestData(data[1])
+        dispatch(cacheResults({[searchQ]:data[1]}))
+
     }
   return (
     <div className='grid grid-flow-col p-3 m-1 shadow-xl items-center'>
@@ -16,8 +58,23 @@ const Header = () => {
         </div>
 
         <div className="za-search flex flex-row justify-center items-center col-span-10">
-            <input type="text" className="za-search-input border rounded-l-full border-gray-800  w-1/2 px-2 text-lg  h-10"/>
-            <button className='border border-gray-500 px-2 bg-gray-800 rounded-r-full h-10 text-white'>Search</button>
+            <div className="input-search-con">
+                <input type="text"
+                onFocus={()=>setShowSuggestion(true)}
+                onBlur={()=>setShowSuggestion(false)}
+                 onChange={(e)=>setSearchQ(e.target.value)}
+                className=" align-middle za-search-input border rounded-l-full w-80 border-gray-800  px-4 text-lg  h-10"/>
+                <button className='px-2 border border-gray-800 rounded-r-full text-lg h-10 align-middle bg-slate-800 text-white'>Search</button>
+                {
+                    suggestData.length>0 && showSuggestion &&
+                    <ul className='fixed px-2 py-2 border border-slate-200 bg-white w-80 shadow-md rounded-md'>
+                    {suggestData.map(suggest=><li key={suggest} className='py-2 px-2 shadow-sm cursor-pointer mb-1 hover:bg-slate-200 rounded-md'>{suggest}</li>)}
+                </ul> 
+
+                }
+          
+            </div>
+           
             <button className="za-mike ">
                 <img className='h-10 ml-2' src="https://www.pngitem.com/pimgs/m/208-2082049_mike-microphone-mic-speaker-voice-icon-mic-speaker.png" alt="" />
             </button>

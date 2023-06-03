@@ -56,4 +56,12 @@ const VideoCard = ({info}) => {
   )
 }
 
+export const addVideo=(info)=>{
+  return (
+    <div className="borderd border border-red-500 rounded-lg">
+        <VideoCard info={info}/>
+    </div>
+  )
+}
+
 export default VideoCard
